@@ -5,9 +5,15 @@ import {customElement, property} from 'lit/decorators.js';
 export class DateDisplay extends LitElement {
   @property({attribute: false})
   date = new Date();
-  
+
   @property({type: String, attribute: 'date-str'})
   dateStr = '';
+
+  willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('dateStr') && this.dateStr) {
+      this.date = new Date(this.dateStr);
+    }
+  }
 
   render() {
     const locale = 'en-US';
