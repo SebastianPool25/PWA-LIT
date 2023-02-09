@@ -17,6 +17,9 @@ export const styles = css`
     height: 100%;
     width: 100%;
   }
+  .selected {
+    top: -100%;
+  }
   ::slotted(*) {
     box-sizing: border-box;
     width: 100%;
