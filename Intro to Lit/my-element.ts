@@ -1,20 +1,22 @@
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-@customElement('name-tag')
-export class NameTag extends LitElement {
+@customElement('more-expressions')
+export class MoreExpressions extends LitElement {
   @property()
-  name: string = 'Your name here';
+  checked: boolean = false;
 
   render() {
     return html`
-      <p>Hola, ${this.name}</p>
-      <input @input=${this.ChangeName} placeholder="Ingresa tu nombre">
+      <div>
+         <!-- TODO: Add expression to input. -->
+         <input type="text" ?disabled=${!this.checked} value="Hola :p.">
+      </div>
+      <label><input type="checkbox" @change=${this.setChecked}> ACTIVA PARA EDITAR</label>
     `;
   }
 
-  ChangeName(event:Event){
-   const input = event.target as HTMLInputElement;
-    this.name = input.value;
+  setChecked(event: Event) {
+    this.checked = (event.target as HTMLInputElement).checked;
   }
 }
