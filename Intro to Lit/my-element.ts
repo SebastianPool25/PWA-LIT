@@ -1,22 +1,32 @@
 import {LitElement, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, state, query} from 'lit/decorators.js';
 
-@customElement('more-expressions')
-export class MoreExpressions extends LitElement {
-  @property()
-  checked: boolean = false;
+@customElement('todo-list')
+export class ToDoList extends LitElement {
+  @state()
+  private _listItems = [
+    { text: 'Dormir', completed: true },
+    { text: 'Comer', completed: false }
+  ];
 
   render() {
     return html`
-      <div>
-         <!-- TODO: Add expression to input. -->
-         <input type="text" ?disabled=${!this.checked} value="Hola :p.">
-      </div>
-      <label><input type="checkbox" @change=${this.setChecked}> ACTIVA PARA EDITAR</label>
+      <h2>Hacer</h2>
+      <ul>
+         <!-- TODO: Render list items. -->
+        ${this._listItems.map((item) =>
+    html`<li>${item.text}</li>`)}
+      </ul>
+      <input id="newitem" aria-label="New item">
+      <button @click=${this.addToDo}>Add</button>
     `;
   }
+  @query('#newitem')
+input!: HTMLInputElement;
 
-  setChecked(event: Event) {
-    this.checked = (event.target as HTMLInputElement).checked;
-  }
+addToDo() {
+  this._listItems = [...this._listItems,
+      {text: this.input.value, completed: false}];
+  this.input.value = '';
+}
 }
